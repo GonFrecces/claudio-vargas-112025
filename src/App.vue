@@ -1,8 +1,11 @@
+<template>
+  <TheLayout />
+</template>
+
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+import TheLayout from './layouts/TheLayout.vue'
 </script>
 
-<template>
-  
-  <HelloWorld />
-</template>
+<style>
+@import './main.css';
+</style>
