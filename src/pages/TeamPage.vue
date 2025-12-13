@@ -56,7 +56,7 @@
             </div>
 
             <!-- Team Grid -->
-            <div class="mx-auto max-w-full md:max-w-full sm:max-w-full lg:max-w-7xl xl:max-w-full">
+            <div class="mx-auto max-w-full md:max-w-3xl sm:max-w-3xl lg:max-w-4xl xl:max-w-5xl">
                 <TransitionGroup name="team-list">
                     <PokemonTeamCard v-for="(pokemon, index) in teamStore.team" :key="pokemon.id" :pokemon="pokemon"
                         :order="index + 1" @remove="handleRemove" @view-detail="handleViewDetail" />

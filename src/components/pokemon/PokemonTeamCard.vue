@@ -1,92 +1,49 @@
 <template>
     <BaseCard class="hover:shadow-xl transition-all duration-300 my-2">
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 items-start gap-4">
-            <!-- Imagen -->
-            <div class="relative shrink-0 cursor-pointer" @click="$emit('view-detail', pokemon.id)">
-                <div class="w-50 h-50 bg-linear-to-br from-gray-100 to-gray-200 rounded-lg p-2">
-                    <img :src="pokemon.image" :alt="pokemon.name"
-                        class="w-full h-full object-contain hover:scale-110 transition-transform" />
-                </div>
-                <div
-                    class="absolute -top-2 -left-2 bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm shadow-lg">
-                    {{ order }}
-                </div>
-                <div class="flex items-start justify-between mb-2">
-                    <div>
-                        <h3 class="text-lg font-bold text-gray-900 capitalize cursor-pointer hover:text-blue-600 transition-colors"
-                            @click="$emit('view-detail', pokemon.id)">
-                            {{ pokemon.name }}
-                        </h3>
-                        <p class="text-xs text-gray-500">#{{ pokemon.id.toString().padStart(3, '0') }}</p>
-                    </div>
-                    <button @click="$emit('remove', pokemon.id)"
-                        class="text-red-500 hover:text-red-700 p-2 rounded-full hover:bg-red-50 transition-colors"
-                        title="Eliminar del equipo">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                        </svg>
-                    </button>
-                </div>
-
+        <!-- Cabecera -->
+        <div class="flex flex-col md:flex-row items-center gap-2 px-1 border-b border-gray-200 mb-4">
+            <img src="/src/assets/images/pokeball.png" :alt="pokemon.name" class="w-5 h-5 object-contain cursor-pointer"
+                @click="$emit('view-detail', pokemon.id)" />
+            <h3 class="text-lg font-bold text-gray-900 capitalize cursor-pointer hover:text-blue-600 transition-colors"
+                @click="$emit('view-detail', pokemon.id)">
+                {{ pokemon.name }}
+            </h3>
+            <span class="text-xs text-gray-500">#{{ pokemon.id.toString().padStart(3, '0') }}</span>
+            <div class="flex flex-col justify-end-safe w-full md:w-auto md:ml-auto">
                 <PokemonTypes :types="pokemon.types" size="lg" class="mb-3" />
-            </div>
-
-            <!-- Información -->
-            <div class="flex-1 min-w-0">
-                <div class="flex items-start justify-between mb-2">
-                    <div>
-                        <h3 class="text-lg font-bold text-gray-900 capitalize cursor-pointer hover:text-blue-600 transition-colors"
-                            @click="$emit('view-detail', pokemon.id)">
-                            {{ pokemon.name }}
-                        </h3>
-                        <p class="text-xs text-gray-500">#{{ pokemon.id.toString().padStart(3, '0') }}</p>
-                    </div>
-                    <button @click="$emit('remove', pokemon.id)"
-                        class="text-red-500 hover:text-red-700 p-2 rounded-full hover:bg-red-50 transition-colors"
-                        title="Eliminar del equipo">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                        </svg>
-                    </button>
-                </div>
-
-                <PokemonTypes :types="pokemon.types" size="lg" class="mb-3" />
-
-                <!-- Stats compactos -->
-                <!-- <div class="grid grid-cols-3 gap-2 text-xs">
-                    <div class="bg-red-50 rounded p-2 text-center">
-                        <p class="text-gray-500 font-medium">HP</p>
-                        <p class="font-bold text-red-600">{{ pokemon.stats.hp }}</p>
-                    </div>
-                    <div class="bg-orange-50 rounded p-2 text-center">
-                        <p class="text-gray-500 font-medium">ATK</p>
-                        <p class="font-bold text-orange-600">{{ pokemon.stats.attack }}</p>
-                    </div>
-                    <div class="bg-blue-50 rounded p-2 text-center">
-                        <p class="text-gray-500 font-medium">DEF</p>
-                        <p class="font-bold text-blue-600">{{ pokemon.stats.defense }}</p>
-                    </div>
-                </div> -->
-                <div v-for="(poke, index) in [pokemon]" :key="index" style="width: 500px; height: 300px;"><canvas :id="`pokemon-stats-chart-${poke.id}`"></canvas></div>
-
-                <!-- Audio player compacto -->
-                <div v-if="pokemon.cry" class="mt-3">
-                    <button @click="toggleAudio"
-                        class="flex items-center gap-2 text-sm text-blue-600 hover:text-blue-700 font-medium">
-                        <svg v-if="!isPlaying" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M8 5v14l11-7z" />
-                        </svg>
-                        <svg v-else class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z" />
-                        </svg>
-                        <span>{{ isPlaying ? 'Detener' : 'Escuchar' }}</span>
-                    </button>
-                    <audio ref="audioRef" :src="pokemon.cry" @ended="isPlaying = false"></audio>
-                </div>
             </div>
         </div>
+        <div class="flex flex-col rounded-lg gap-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 items-start gap-4 w-full">
+                <!-- Imagen -->
+                <div class="relative w-full cursor-pointer" @click="$emit('view-detail', pokemon.id)">
+                    <div class="w-full aspect-square bg-linear-to-br from-gray-100 to-gray-200 rounded-lg p-4 flex items-center justify-center relative overflow-hidden">
+                        <div class="absolute inset-0 bg-center bg-no-repeat bg-contain opacity-10" style="background-image: url('/src/assets/images/background.png');"></div>
+                        <img :src="pokemon.image" :alt="pokemon.name"
+                            class="max-w-full max-h-full object-contain hover:scale-110 transition-transform relative z-10" />
+                    </div>
+                </div>
+
+                <!-- Información (Grafico) -->
+                <div class="relative w-full h-full border border-gray-200 rounded-lg">
+                    <div class="font-medium py-2 text-center border-b border-gray-200">Estadísticas</div>
+                    <div :id="`pokemon-stats-chart-${pokemon.id}`" class="w-full h-64 md:h-72 lg:h-80 justify-center align-middle"></div>
+                </div>
+                
+            </div>
+            <!-- Audio player compacto -->
+            <div v-if="pokemon.cry" class="flex justify-start">
+                <button @click="toggleAudio"
+                    class="flex items-center gap-2 cursor-pointer text-sm text-blue-600 hover:text-blue-700 font-medium transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.114 5.636a9 9 0 0 1 0 12.728M16.463 8.288a5.25 5.25 0 0 1 0 7.424M6.75 8.25l4.72-4.72a.75.75 0 0 1 1.28.53v15.88a.75.75 0 0 1-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.009 9.009 0 0 1 2.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75Z" />
+                    </svg>
+                    <span>{{ isPlaying ? 'Detener' : 'Escuchar' }}</span>
+                </button>
+                <audio ref="audioRef" :src="pokemon.cry" @ended="isPlaying = false"></audio>
+            </div>
+        </div>
+        
     </BaseCard>
 </template>
 
@@ -95,7 +52,7 @@ import { ref, onMounted } from 'vue'
 import type { SimplifiedPokemon } from '../../types/Pokemon'
 import BaseCard from '../ui/BaseCard.vue'
 import PokemonTypes from '../pokemon/PokemonTypes.vue'
-import Chart from 'chart.js/auto';
+import * as echarts from 'echarts';
 
 interface Props {
     pokemon: SimplifiedPokemon
@@ -111,10 +68,9 @@ const emit = defineEmits<{
 
 const audioRef = ref<HTMLAudioElement | null>(null)
 const isPlaying = ref(false)
-const chartInstance = ref<Chart | null>(null)
-const charId = `pokemon-stats-chart-${props.pokemon.id}`
+const chartInstance = ref<any>(null)
 
-function toggleAudio() {
+const toggleAudio = () => {
     if (!audioRef.value) return
 
     if (isPlaying.value) {
@@ -127,73 +83,76 @@ function toggleAudio() {
 }
 
 onMounted(() => {
+    const chartId = `pokemon-stats-chart-${props.pokemon.id}`
+    const chartDom = document.getElementById(chartId)
+    
+    if (!chartDom) {
+        console.error('Chart container not found:', chartId)
+        return
+    }
 
-    /* Object.entries(props.pokemon.stats).map(([key, value]) => {
-        console.log(`${key}: ${value}`);
-    }); */
-    const data = {
-    labels: [
-        'Hp',
-        'Attack',
-        'Defense',
-        'Sp. Attack',
-        'Sp. Defense',
-        'Speed'
-    ],
-    datasets: [{
-        label: '',
-        data: [
-            props.pokemon.stats.hp, 
-            props.pokemon.stats.attack, 
-            props.pokemon.stats.defense, 
-            props.pokemon.stats.specialAttack, 
-            props.pokemon.stats.specialDefense, 
-            props.pokemon.stats.speed
-        ],
-        fill: true,
-        backgroundColor: 'rgba(255, 99, 132, 0.2)',
-        borderColor: 'rgb(255, 99, 132)',
-        pointBackgroundColor: 'rgb(255, 99, 132)',
-        pointBorderColor: '#fff',
-        pointHoverBackgroundColor: '#fff',
-        pointHoverBorderColor: 'rgb(255, 99, 132)'
-    }]
-    };
-
-    const canvas = document.getElementById(charId) as HTMLCanvasElement
-    if (canvas) {
-        chartInstance.value = new Chart(canvas, {
-            type: 'radar',
-            data: data,
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                elements: {
-                    line: {
-                        borderWidth: 3,
-                        borderJoinStyle: 'round'
-                    }
-                },
-                scales: {
-                    r: {
-                        beginAtZero: true,
-                        min: 0,
-                        max: 255,
-                        angleLines: {
-                            display: false
+    chartInstance.value = echarts.init(chartDom)
+    
+    // Hacer el gráfico responsivo
+    window.addEventListener('resize', () => {
+        chartInstance.value?.resize()
+    })
+    
+    const option: echarts.EChartsOption = {
+        radar: {
+            indicator: [
+                { name: `Hp - ${props.pokemon.stats.hp}`, max: 255 },
+                { name: `Ataque - ${props.pokemon.stats.attack}`, max: 255 },
+                { name: `Defensa - ${props.pokemon.stats.defense}`, max: 255 },
+                { name: `Atq. Especial - ${props.pokemon.stats.specialAttack}`, max: 255 },
+                { name: `Def. Especial - ${props.pokemon.stats.specialDefense}`, max: 255 },
+                { name: `Velocidad - ${props.pokemon.stats.speed}`, max: 255 }
+            ],
+            shape: 'polygon',
+            splitNumber: 5,
+            axisName: {color: '#666', width: 14, height: 14, fontWeight: 'bold'},
+            splitLine: {lineStyle: {color: '#ddd'}},
+            splitArea: {areaStyle: {color: ['transparent', 'transparent']}},
+        },
+        series: [
+            {
+                type: 'radar',
+                data: [
+                    {
+                        value: [
+                            props.pokemon.stats.hp,
+                            props.pokemon.stats.attack,
+                            props.pokemon.stats.defense,
+                            props.pokemon.stats.specialAttack,
+                            props.pokemon.stats.specialDefense,
+                            props.pokemon.stats.speed
+                        ],
+                        name: props.pokemon.name,
+                        areaStyle: {
+                            color: new echarts.graphic.RadialGradient(0.1, 0.6, 1, [
+                            {
+                                color: 'rgb(255, 99, 132)',
+                                offset: 0
+                            },
+                            {
+                                color: 'rgba(255, 99, 132, 0.3)',
+                                offset: 1
+                            }
+                            ]),
                         },
-                        ticks: {
-                            stepSize: 50
+                        lineStyle: {
+                            color: 'rgb(255, 99, 132)',
+                            width: 2
+                        },
+                        itemStyle: {
+                            color: 'rgb(255, 99, 132)'
                         }
                     }
-                },
-                plugins: {
-                    legend: {
-                        display: false
-                    }
-                }
-            },
-        });
+                ]
+            }
+        ]
     }
+    
+    chartInstance.value.setOption(option)
 });
 </script>

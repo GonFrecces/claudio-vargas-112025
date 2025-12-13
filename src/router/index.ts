@@ -8,7 +8,7 @@ const routes: RouteRecordRaw[] = [
         name: 'home',
         component: () => import('../pages/HomePage.vue'),
         meta: {
-            title: 'Seleccionar Pokémon'
+            title: 'Inicio'
         }
     },
     {
