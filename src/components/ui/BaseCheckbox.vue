@@ -1,11 +1,11 @@
 <template>
     <label :class="['inline-flex items-center cursor-pointer', className]">
         <input type="checkbox" :checked="modelValue" :disabled="disabled" :class="[
-            'rounded border-gray-300 text-blue-600 focus:ring-blue-500 transition-colors',
+            'rounded border-gray-300 dark:border-gray-600 text-blue-600 focus:ring-blue-500 transition-colors',
             sizeClasses,
             disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'
         ]" @change="handleChange" />
-        <span v-if="label || $slots.default" :class="['ml-2 text-gray-700', labelSizeClasses]">
+        <span v-if="label || $slots.default" :class="['ml-2 text-gray-700 dark:text-gray-300', labelSizeClasses]">
             <slot>{{ label }}</slot>
         </span>
     </label>

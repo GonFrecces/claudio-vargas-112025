@@ -11,7 +11,7 @@
         </div>
 
         <!-- Imagen del Pokémon -->
-        <div class="relative aspect-square bg-linear-to-br from-gray-100 to-gray-200 rounded-lg overflow-hidden mb-3">
+        <div class="relative aspect-square bg-linear-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-800 rounded-lg overflow-hidden mb-3">
             <img :src="pokemon.image" :alt="pokemon.name"
                 class="w-full h-full object-contain p-4 transition-transform duration-300 hover:scale-110"
                 loading="lazy" />
@@ -20,11 +20,11 @@
         <!-- Info del Pokémon -->
         <div class="space-y-2">
             <div class="flex items-center justify-between">
-                <span class="text-xs font-medium text-gray-500">#{{ pokemon.id.toString().padStart(3, '0') }}</span>
+                <span class="text-xs font-medium text-gray-500 dark:text-gray-300">#{{ pokemon.id.toString().padStart(3, '0') }}</span>
                 <PokemonTypes :types="pokemon.types" size="lg" />
             </div>
 
-            <h3 class="text-lg font-bold text-gray-900 capitalize">
+            <h3 class="text-lg font-bold text-gray-900 dark:text-gray-50 capitalize">
                 {{ pokemon.name }}
             </h3>
 

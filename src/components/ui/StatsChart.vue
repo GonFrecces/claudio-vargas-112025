@@ -14,7 +14,7 @@
         <!-- Total Stats -->
         <div class="pt-3 border-t border-gray-200">
             <div class="flex justify-between items-center">
-                <span class="font-bold text-gray-700">TOTAL</span>
+                <span class="font-bold text-gray-700 dark:text-gray-50">TOTAL</span>
                 <span class="font-bold text-lg text-blue-600">{{ totalStats }}</span>
             </div>
         </div>

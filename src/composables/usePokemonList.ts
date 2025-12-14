@@ -111,11 +111,7 @@ export const usePokemon = () => {
     }
 
     const handleToggleSelect = (pokemon: SimplifiedPokemon) => {
-        const success = teamStore.togglePokemon(pokemon)
-
-        if (!success && !teamStore.isInTeam(pokemon.id)) {
-            alert('¡Tu equipo ya tiene 6 Pokémon! Debes eliminar uno para agregar otro.')
-        }
+        teamStore.togglePokemon(pokemon)
     }
 
     return {

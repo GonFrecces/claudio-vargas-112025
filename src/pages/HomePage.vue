@@ -2,21 +2,21 @@
     <div>
         <!-- Header -->
         <div class="text-center mb-8">
-            <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-2">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-gray-50 mb-2">
                 Selecciona tu Equipo Pokémon
             </h1>
-            <p class="text-gray-600 text-lg">
+            <p class="text-gray-600 dark:text-gray-200 text-lg">
                 Elige hasta 6 Pokémon de la primera generación (151 Pokémon)
             </p>
         </div>
 
         <!-- Filtros -->
-        <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-8">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <BaseInput v-model="searchQuery" placeholder="Buscar Pokémon por nombre o número..." label="Buscar" />
 
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">
+                <div class="dark:text-gray-200">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                         Filtrar por tipo
                     </label>
                     <select v-model="selectedType"
@@ -37,8 +37,8 @@
             <!-- Team Info -->
             <div v-if="teamStore.teamSize > 0" class="mt-4 pt-4 border-t border-gray-200">
                 <div class="flex items-center justify-between">
-                    <span class="text-sm text-gray-600">
-                        Pokémon seleccionados: <strong class="text-blue-600">{{ teamStore.teamSize }}/6</strong>
+                    <span class="text-sm text-gray-600 dark:text-gray-300">
+                        Pokémon seleccionados: <strong class="text-blue-600 dark:text-gray-200">{{ teamStore.teamSize }}/6</strong>
                     </span>
                     <RouterLink to="/team">
                         <BaseButton size="sm">
@@ -52,7 +52,7 @@
         <!-- Loading State -->
         <div v-if="pokemonStore.loading" class="text-center py-20">
             <LoadingSpinner size="xl" />
-            <p class="text-gray-600 text-lg mt-4">Cargando Pokémon...</p>
+            <p class="text-gray-600 text-lg mt-4 dark:text-gray-300">Cargando Pokémon...</p>
         </div>
 
         <!-- Error State -->
@@ -68,10 +68,10 @@
         <div v-else>
             <!-- Results info -->
             <div class="flex items-center justify-between mb-4">
-                <p class="text-sm text-gray-600">
+                <p class="text-sm text-gray-600 dark:text-gray-300">
                     Mostrando {{ filteredPokemons.length }} Pokémon
                 </p>
-                <p class="text-sm text-gray-600">
+                <p class="text-sm text-gray-600 dark:text-gray-300">
                     Página {{ pokemonStore.currentPage }} de {{ pokemonStore.totalPages }}
                 </p>
             </div>

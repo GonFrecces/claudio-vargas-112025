@@ -1,5 +1,5 @@
 <template>
-    <div class="rounded-lg p-6 border border-gray-200 shadow-md">
+    <div class="rounded-lg p-6 border border-gray-400 shadow-md">
         <h3 class="text-lg font-bold text-gray-50 mb-4">Cadena Evolutiva</h3>
 
         <div v-if="evolutions.length > 0" class="flex flex-wrap items-center justify-center gap-4">

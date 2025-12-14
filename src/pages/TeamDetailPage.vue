@@ -19,16 +19,14 @@
         <div v-else-if="pokemonDetail">
             <!-- Back Button -->
             <div class="mb-6">
-                <!-- <BaseButton variant="outline" @click="router.push('/team')">
-                    ← Volver al Equipo
-                </BaseButton> -->
                 <!-- Actions -->
-                <div class=" bg-white rounded-lg shadow-md p-6">
-                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <div class="justify-between flex-col sm:flex-row bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                    <div class="flex flex-col sm:flex-row gap-2 justify-start-safe text-gray-600 dark:text-gray-300">
                         <BaseButton variant="outline" size="lg" @click="router.push('/team')">
                             ← Volver al Equipo
                         </BaseButton>
-
+                    </div>
+                    <div class="flex gap-2 justify-end-safe text-gray-600 dark:text-gray-300">
                         <BaseButton v-if="isInTeam" variant="danger" size="lg" @click="handleRemoveFromTeam">
                             Eliminar del Equipo
                         </BaseButton>
@@ -79,15 +77,15 @@
 
                     <!-- Grafico -->
                     <div class="w-full md:w-full lg:w-full mt-8 md:mt-0">
-                        <div class="relative w-full h-full border border-gray-200 rounded-lg">
+                        <div class="relative w-full h-full border border-gray-400 rounded-lg">
                             <div class="font-medium py-2 text-center border-b border-gray-200">Estadísticas</div>
                             <PokemonRadarChart v-if="pokemonDetail" :pokemonId="pokemonDetail.id" :stats="pokemonDetail.stats" />
                         </div>
                     </div>
                 </div>
                 <!-- Description -->
-                <div class="rounded-lg border border-gray-200  p-6 my-3">
-                    <h2 class="text-2xl font-bold text-gray-50 mb-4">Descripción</h2>
+                <div class="rounded-lg border border-gray-200 dark:border-gray-400 p-6 my-3">
+                    <h2 class="text-2xl font-bold text-gray-50 dark:text-gray-50 mb-4">Descripción</h2>
                     <p class="text-gray-50 leading-relaxed text-lg">
                         {{ pokemonDetail.description }}
                     </p>

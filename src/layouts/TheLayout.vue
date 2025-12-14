@@ -1,5 +1,5 @@
 <template>
-    <div class="min-h-screen bg-linear-to-br from-blue-50 via-purple-50 to-pink-50">
+    <div class="min-h-screen bg-linear-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
         <TheNavbar />
         <main class="mx-auto px-4 py-8">
             <RouterView v-slot="{ Component }">
@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import TheNavbar from './TheNavbar.vue'
+import TheNavbar from '@/layouts/TheNavbar.vue'
 import { RouterView } from 'vue-router'
 </script>
 

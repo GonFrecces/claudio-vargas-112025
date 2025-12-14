@@ -1,6 +1,6 @@
 <template>
     <div :class="[
-        'bg-white transition-all duration-200',
+        'bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 transition-all duration-200',
         shadowClasses,
         roundedClasses,
         hoverClasses,

@@ -5,6 +5,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import * as echarts from 'echarts';
+import { useThemeStore } from '@/stores/themeStore';
 
 interface Props {
     pokemonId: number
@@ -20,6 +21,7 @@ interface Props {
 
 const props = defineProps<Props>()
 const chartInstance = ref<any>(null)
+const themeStore = useThemeStore();
 
 const initChart = () => {
     if (!props.pokemonId) return;
@@ -51,8 +53,8 @@ const initChart = () => {
             ],
             shape: 'polygon',
             splitNumber: 5,
-            axisName: {color: '#000', width: 14, height: 14, fontWeight: 'bold'},
-            splitLine: {lineStyle: {color: '#ddd'}},
+            axisName: {color: themeStore.isDark ? '#fff' : '#000', width: 14, height: 14, fontWeight: 'bold'},
+            splitLine: {lineStyle: {color: themeStore.isDark ? '#555' : '#ddd'}},
             splitArea: {areaStyle: {color: ['transparent', 'transparent']}},
             axisTick: {
                 show: false

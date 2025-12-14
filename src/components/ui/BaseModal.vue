@@ -15,13 +15,13 @@
                         leave-from-class="transform opacity-100 scale-100"
                         leave-to-class="transform opacity-0 scale-95">
                         <div v-if="modelValue" :class="[
-                            'relative bg-white rounded-lg shadow-xl',
+                            'relative bg-white dark:bg-gray-700 rounded-lg shadow-xl',
                             sizeClasses
                         ]" @click.stop>
                             <!-- Header -->
-                            <div v-if="title || $slots.header" class="px-6 py-4 border-b border-gray-200">
+                            <div v-if="title || $slots.header" class="px-6 py-4 border-b border-gray-200 dark:border-gray-600">
                                 <slot name="header">
-                                    <h3 class="text-lg font-semibold text-gray-900">{{ title }}</h3>
+                                    <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-50">{{ title }}</h3>
                                 </slot>
                                 <button v-if="closable" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
                                     @click="close">

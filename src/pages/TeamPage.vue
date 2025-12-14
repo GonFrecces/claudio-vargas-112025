@@ -2,10 +2,10 @@
     <div>
         <!-- Header -->
         <div class="text-center mb-8">
-            <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-2">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-gray-50 mb-2">
                 Mi Equipo Pokémon
             </h1>
-            <p class="text-gray-600 text-lg">
+            <p class="text-gray-600 dark:text-gray-300 text-lg">
                 {{ teamStore.teamSize === 0 ? 'Aún no has seleccionado ningún Pokémon' : `Has seleccionado
                 ${teamStore.teamSize} de 6 Pokémon` }}
             </p>
@@ -14,10 +14,10 @@
         <!-- Empty State -->
         <div v-if="teamStore.isEmpty" class="text-center py-20">
             <div class="text-8xl mb-6">🎯</div>
-            <h2 class="text-2xl font-bold text-gray-900 mb-4">
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-gray-50 mb-4">
                 Tu equipo está vacío
             </h2>
-            <p class="text-gray-600 mb-8">
+            <p class="text-gray-600 dark:text-gray-300 mb-8">
                 Ve a la página principal y selecciona hasta 6 Pokémon para formar tu equipo
             </p>
             <RouterLink to="/">
@@ -30,15 +30,15 @@
         <!-- Team Content -->
         <div v-else>
             <!-- Actions -->
-            <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <div class="bg-white dark:bg-gray-700 rounded-lg shadow-md p-6 mb-8">
                 <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
                     <div class="flex items-center gap-3">
                         <div class="bg-blue-100 rounded-full p-3">
                             <img src="/src/assets/images/pokeball.png" alt="Team Icon" class="w-6 h-6" />
                         </div>
                         <div>
-                            <h3 class="font-bold text-gray-900">Equipo Completo</h3>
-                            <p class="text-sm text-gray-600">{{ teamStore.teamSize }} Pokémon seleccionados</p>
+                            <h3 class="font-bold text-gray-900 dark:text-gray-50">Equipo Completo</h3>
+                            <p class="text-sm text-gray-600 dark:text-gray-200">{{ teamStore.teamSize }} Pokémon seleccionados</p>
                         </div>
                     </div>
 
@@ -64,7 +64,7 @@
             </div>
 
             <!-- Team Stats Summary -->
-            <div class="mx-auto max-w-full md:max-w-3xl sm:max-w-3xl lg:max-w-4xl xl:max-w-5xl bg-white rounded-lg shadow-md p-6">
+            <div class="mx-auto max-w-full md:max-w-3xl sm:max-w-3xl lg:max-w-4xl xl:max-w-5xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-md p-6">
                 <h3 class="text-xl font-bold text-gray-900 mb-4">Estadísticas del Equipo</h3>
                 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
                     <div class="text-center p-4 bg-red-50 rounded-lg">
@@ -101,8 +101,8 @@
             </div>
 
             <!-- Type Distribution -->
-            <div class="mx-auto max-w-full md:max-w-3xl sm:max-w-3xl lg:max-w-4xl xl:max-w-5xl mt-2 bg-white rounded-lg shadow-md p-6">
-                <h3 class="text-xl font-bold text-gray-900 mb-4">Distribución de Tipos</h3>
+            <div class="mx-auto max-w-full md:max-w-3xl sm:max-w-3xl lg:max-w-4xl xl:max-w-5xl mt-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-md p-6">
+                <h3 class="text-xl font-bold text-gray-900 dark:text-gray-50 mb-4">Distribución de Tipos</h3>
                 <div class="flex flex-wrap gap-3">
                     <div v-for="(count, type) in typeDistribution" :key="type"
                         class="flex items-center gap-2 bg-gray-50 rounded-lg px-4 py-2">
@@ -115,7 +115,7 @@
 
         <!-- Confirmation Modal -->
         <BaseModal v-model="showConfirmModal" title="¿Estás seguro?" size="sm">
-            <p class="text-gray-600 mb-4">
+            <p class="text-gray-600 dark:text-gray-300 mb-4">
                 ¿Deseas eliminar todos los Pokémon de tu equipo? Esta acción no se puede deshacer.
             </p>
             <template #footer>

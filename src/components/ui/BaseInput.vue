@@ -1,11 +1,11 @@
 <template>
     <div class="w-full">
-        <label v-if="label" :for="inputId" class="block text-sm font-medium text-gray-700 mb-1">
+        <label v-if="label" :for="inputId" class="block text-sm font-medium text-gray-700 dark:text-gray-50 mb-1">
             {{ label }}
         </label>
         <input :id="inputId" :type="type" :value="modelValue" :placeholder="placeholder" :disabled="disabled" :class="[
             'w-full border transition-colors duration-200 focus:outline-none focus:ring-2',
-            'px-4 py-2.5 text-sm rounded-md',
+            'px-4 py-2.5 text-sm rounded-md placeholder-gray-400 dark:placeholder-gray-500',
             stateClasses,
             className
         ]" @input="handleInput" />
