@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
-import type { SimplifiedPokemon } from '../types/Pokemon'
+import type { SimplifiedPokemon } from '@/types/Pokemon'
 
 const STORAGE_KEY = 'pokemon-team'
 const MAX_TEAM_SIZE = 6
@@ -24,7 +24,7 @@ export const useTeamStore = defineStore('team', () => {
     })
 
     // Actions
-    function addToTeam(pokemon: SimplifiedPokemon): boolean {
+    const addToTeam = (pokemon: SimplifiedPokemon): boolean => {
         if (isFull.value) {
             return false
         }
@@ -38,7 +38,7 @@ export const useTeamStore = defineStore('team', () => {
         return true
     }
 
-    function removeFromTeam(pokemonId: number) {
+    const removeFromTeam = (pokemonId: number) => {
         const index = team.value.findIndex(p => p.id === pokemonId)
         if (index >= 0) {
             team.value.splice(index, 1)
@@ -46,7 +46,7 @@ export const useTeamStore = defineStore('team', () => {
         }
     }
 
-    function togglePokemon(pokemon: SimplifiedPokemon): boolean {
+    const togglePokemon = (pokemon: SimplifiedPokemon): boolean => {
         if (isInTeam.value(pokemon.id)) {
             removeFromTeam(pokemon.id)
             return false
@@ -55,12 +55,12 @@ export const useTeamStore = defineStore('team', () => {
         }
     }
 
-    function clearTeam() {
+    const clearTeam = () => {
         team.value = []
         saveToLocalStorage()
     }
 
-    function saveToLocalStorage() {
+    const saveToLocalStorage = () => {
         try {
             localStorage.setItem(STORAGE_KEY, JSON.stringify(team.value))
         } catch (error) {
@@ -68,7 +68,7 @@ export const useTeamStore = defineStore('team', () => {
         }
     }
 
-    function loadFromLocalStorage() {
+    const loadFromLocalStorage = () => {
         try {
             const saved = localStorage.getItem(STORAGE_KEY)
             if (saved) {

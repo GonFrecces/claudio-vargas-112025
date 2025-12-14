@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router'
-import { useTeamStore } from '../stores/teamStore'
+import { useTeamStore } from '@/stores/teamStore'
 
 const routes: RouteRecordRaw[] = [
     {

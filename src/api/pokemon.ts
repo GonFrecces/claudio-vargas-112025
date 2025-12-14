@@ -1,4 +1,4 @@
-import axios from 'axios'
+import { api } from '@/api/api'
 import type {
     Pokemon,
     PokemonListResponse,
@@ -6,13 +6,10 @@ import type {
     EvolutionChain,
     SimplifiedPokemon,
     PokemonDetail,
-    EvolutionPokemon
-} from '../types/Pokemon'
+    EvolutionPokemon,
+    ChainLink
+} from '@/types/Pokemon'
 
-const api = axios.create({
-    baseURL: 'https://pokeapi.co/api/v2',
-    timeout: 10000
-})
 
 export const pokemonApi = {
     // Obtener lista de Pokémon con paginación
@@ -75,7 +72,7 @@ export const pokemonApi = {
             .replace(/\f/g, ' ') || 'Sin descripción disponible'
 
         // Obtener cadena evolutiva
-        const evolutionChain = await this.getEvolutionChain(species.evolution_chain.url)
+        const evolutionChain: EvolutionChain = await this.getEvolutionChain(species.evolution_chain.url)
         const evolutions = await this.processEvolutionChain(evolutionChain.chain)
 
         return {
@@ -86,7 +83,7 @@ export const pokemonApi = {
     },
 
     // Procesar cadena evolutiva recursivamente
-    async processEvolutionChain(chain: any): Promise<EvolutionPokemon[]> {
+    async processEvolutionChain(chain: ChainLink): Promise<EvolutionPokemon[]> {
         const evolutions: EvolutionPokemon[] = []
 
         const extractId = (url: string): number => {

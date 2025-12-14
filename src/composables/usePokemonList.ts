@@ -1,27 +1,19 @@
-import { ref } from 'vue'
-import { pokemonApi } from '../api/pokemon'
-import { type Pokemon, type PokemonListResponse } from '../types/Pokemon'
+import { ref, computed } from 'vue'
+import { pokemonApi } from '@/api/pokemon'
+import { usePokemonStore } from '@/stores/pokemonStore'
+import { useTeamStore } from '@/stores/teamStore'
+import { type Pokemon, type PokemonListResponse, type SimplifiedPokemon } from '@/types/Pokemon'
 
-interface SimplifiedPokemon {
-    id: number
-    name: string
-    image: string | null
-    types: string[]
-    stats: {
-        hp: number
-        attack: number
-        defense: number
-        specialAttack: number
-        specialDefense: number
-        speed: number
-    }
-}
 
 export const usePokemon = () => {
     const pokemons = ref<SimplifiedPokemon[]>([])
     const loading = ref(false)
     const error = ref(null)
-    //const selectedTeam = ref([])
+    const pokemonStore = usePokemonStore()
+    const teamStore = useTeamStore()
+
+    const searchQuery = ref('')
+    const selectedType = ref('')
 
     // Fetch Pokémon de la API
     const fetchPokemons = async (limit: number = 151, offset: number = 0) => {
@@ -64,65 +56,80 @@ export const usePokemon = () => {
         }
     }
 
-    // Gestión de equipo
-    /* const togglePokemon = (pokemon: any) => {
-        const index = selectedTeam.value.findIndex((p: any) => p.id === pokemon.id)
+    const filteredPokemons = computed(() => {
+        let filtered = [...pokemonStore.pokemons]
 
-        if (index > -1) {
-            selectedTeam.value.splice(index, 1)
-        } else if (selectedTeam.value.length < 6) {
-            selectedTeam.value.push(pokemon)
+        // Filtro de búsqueda
+        if (searchQuery.value) {
+            const search = searchQuery.value.toLowerCase()
+            filtered = filtered.filter(pokemon =>
+                pokemon.name.toLowerCase().includes(search) ||
+                pokemon.id.toString().includes(search)
+            )
         }
-    }
 
-    const removePokemon = (pokemon: any) => {
-        const index = selectedTeam.value.findIndex((p: any) => p.id === pokemon.id)
-        if (index > -1) {
-            selectedTeam.value.splice(index, 1)
+        // Filtro por tipo
+        if (selectedType.value) {
+            filtered = filtered.filter(pokemon =>
+                pokemon.types.includes(selectedType.value)
+            )
         }
-    }
 
-    const clearTeam = () => {
-        selectedTeam.value = []
-    }
-
-    const saveTeam = () => {
-        localStorage.setItem('pokemonTeam', JSON.stringify(selectedTeam.value))
-        return selectedTeam.value
-    }
-
-    const loadTeam = () => {
-        const saved = localStorage.getItem('pokemonTeam')
-        if (saved) {
-            selectedTeam.value = JSON.parse(saved)
-        }
-    } */
-
-    // Computed
-    /* const isSelected = computed(() => (pokemonId) => {
-        return selectedTeam.value.some(p => p.id === pokemonId)
+        return filtered
     })
 
-    const canSelectMore = computed(() => selectedTeam.value.length < 6)
+    const displayedPokemons = computed(() => {
+        const start = (pokemonStore.currentPage - 1) * pokemonStore.itemsPerPage
+        const end = start + pokemonStore.itemsPerPage
+        return filteredPokemons.value.slice(start, end)
+    })
 
-    const getSelectionOrder = computed(() => (pokemonId) => {
-        const index = selectedTeam.value.findIndex(p => p.id === pokemonId)
-        return index > -1 ? index + 1 : null
-    }) */
+    const availableTypes = computed(() => {
+        const types = new Set<string>()
+        pokemonStore.pokemons.forEach(pokemon => {
+            pokemon.types.forEach(type => types.add(type))
+        })
+        return Array.from(types).sort()
+    })
+
+    const visiblePages = computed(() => {
+        const current = pokemonStore.currentPage
+        const total = pokemonStore.totalPages
+        const delta = 2
+        const range: number[] = []
+
+        for (let i = Math.max(1, current - delta); i <= Math.min(total, current + delta); i++) {
+            range.push(i)
+        }
+
+        return range
+    })
+
+    const resetFilters = () => {
+        searchQuery.value = ''
+        selectedType.value = ''
+    }
+
+    const handleToggleSelect = (pokemon: SimplifiedPokemon) => {
+        const success = teamStore.togglePokemon(pokemon)
+
+        if (!success && !teamStore.isInTeam(pokemon.id)) {
+            alert('¡Tu equipo ya tiene 6 Pokémon! Debes eliminar uno para agregar otro.')
+        }
+    }
 
     return {
         pokemons,
         loading,
         error,
-        //selectedTeam,
         fetchPokemons,
-        //togglePokemon,
-        //removePokemon,
-        //clearTeam,
-        //saveTeam,
-        //loadTeam,
-        //isSelected,
-        //canSelectMore,
-        //getSelectionOrder
+        searchQuery,
+        selectedType,
+        filteredPokemons,
+        displayedPokemons,
+        availableTypes,
+        visiblePages,
+        resetFilters,
+        handleToggleSelect,
     }
 }

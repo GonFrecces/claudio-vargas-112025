@@ -118,83 +118,19 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
-import { usePokemonStore } from '../stores/pokemonStore'
-import { useTeamStore } from '../stores/teamStore'
-import type { SimplifiedPokemon } from '../types/Pokemon'
-import PokemonCard from '../components/pokemon/PokemonCard.vue'
-import BaseInput from '../components/ui/BaseInput.vue'
-import BaseButton from '../components/ui/BaseButton.vue'
-import LoadingSpinner from '../components/ui/LoadingSpinner.vue'
+import { onMounted } from 'vue'
+import { usePokemonStore } from '@/stores/pokemonStore'
+import { useTeamStore } from '@/stores/teamStore'
+import { usePokemon } from '@/composables/usePokemonList'
+import PokemonCard from '@/components/pokemon/PokemonCard.vue'
+import BaseInput from '@/components/ui/BaseInput.vue'
+import BaseButton from '@/components/ui/BaseButton.vue'
+import LoadingSpinner from '@/components/ui/LoadingSpinner.vue'
 
 const pokemonStore = usePokemonStore()
 const teamStore = useTeamStore()
 
-const searchQuery = ref('')
-const selectedType = ref('')
-
-// Filtros
-const filteredPokemons = computed(() => {
-    let filtered = [...pokemonStore.pokemons]
-
-    // Filtro de búsqueda
-    if (searchQuery.value) {
-        const search = searchQuery.value.toLowerCase()
-        filtered = filtered.filter(pokemon =>
-            pokemon.name.toLowerCase().includes(search) ||
-            pokemon.id.toString().includes(search)
-        )
-    }
-
-    // Filtro por tipo
-    if (selectedType.value) {
-        filtered = filtered.filter(pokemon =>
-            pokemon.types.includes(selectedType.value)
-        )
-    }
-
-    return filtered
-})
-
-const displayedPokemons = computed(() => {
-    const start = (pokemonStore.currentPage - 1) * pokemonStore.itemsPerPage
-    const end = start + pokemonStore.itemsPerPage
-    return filteredPokemons.value.slice(start, end)
-})
-
-const availableTypes = computed(() => {
-    const types = new Set < string > ()
-    pokemonStore.pokemons.forEach(pokemon => {
-        pokemon.types.forEach(type => types.add(type))
-    })
-    return Array.from(types).sort()
-})
-
-const visiblePages = computed(() => {
-    const current = pokemonStore.currentPage
-    const total = pokemonStore.totalPages
-    const delta = 2
-    const range: number[] = []
-
-    for (let i = Math.max(1, current - delta); i <= Math.min(total, current + delta); i++) {
-        range.push(i)
-    }
-
-    return range
-})
-
-function resetFilters() {
-    searchQuery.value = ''
-    selectedType.value = ''
-}
-
-function handleToggleSelect(pokemon: SimplifiedPokemon) {
-    const success = teamStore.togglePokemon(pokemon)
-
-    if (!success && !teamStore.isInTeam(pokemon.id)) {
-        alert('¡Tu equipo ya tiene 6 Pokémon! Debes eliminar uno para agregar otro.')
-    }
-}
+const { searchQuery, selectedType, filteredPokemons, displayedPokemons, availableTypes, visiblePages, resetFilters, handleToggleSelect } = usePokemon()
 
 onMounted(() => {
     pokemonStore.fetchPokemons()

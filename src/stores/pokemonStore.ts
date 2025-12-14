@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
-import { pokemonApi } from '../api/pokemon'
-import type { SimplifiedPokemon, PokemonDetail } from '../types/Pokemon'
+import { pokemonApi } from '@/api/pokemon'
+import type { SimplifiedPokemon, PokemonDetail } from '@/types/Pokemon'
 
 export const usePokemonStore = defineStore('pokemon', () => {
     // State
@@ -23,7 +23,7 @@ export const usePokemonStore = defineStore('pokemon', () => {
     })
 
     // Actions
-    async function fetchPokemons() {
+    const fetchPokemons = async () => {
         if (pokemons.value.length > 0) return // Ya cargados
 
         loading.value = true
@@ -46,7 +46,7 @@ export const usePokemonStore = defineStore('pokemon', () => {
         }
     }
 
-    async function fetchPokemonDetail(id: number): Promise<PokemonDetail | null> {
+    const fetchPokemonDetail = async (id: number): Promise<PokemonDetail | null> => {
         // Verificar cache
         if (pokemonCache.value.has(id)) {
             return pokemonCache.value.get(id)!
@@ -68,19 +68,19 @@ export const usePokemonStore = defineStore('pokemon', () => {
         }
     }
 
-    function setPage(page: number) {
+    const setPage = (page: number) => {
         if (page >= 1 && page <= totalPages.value) {
             currentPage.value = page
         }
     }
 
-    function nextPage() {
+    const nextPage = () => {
         if (currentPage.value < totalPages.value) {
             currentPage.value++
         }
     }
 
-    function previousPage() {
+    const previousPage = () => {
         if (currentPage.value > 1) {
             currentPage.value--
         }

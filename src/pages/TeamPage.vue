@@ -64,9 +64,9 @@
             </div>
 
             <!-- Team Stats Summary -->
-            <div class="mt-8 bg-white rounded-lg shadow-md p-6">
+            <div class="mx-auto max-w-full md:max-w-3xl sm:max-w-3xl lg:max-w-4xl xl:max-w-5xl bg-white rounded-lg shadow-md p-6">
                 <h3 class="text-xl font-bold text-gray-900 mb-4">Estadísticas del Equipo</h3>
-                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
                     <div class="text-center p-4 bg-red-50 rounded-lg">
                         <p class="text-sm text-gray-600 mb-1">HP Total</p>
                         <p class="text-2xl font-bold text-red-600">{{ teamStats.totalHp }}</p>
@@ -101,7 +101,7 @@
             </div>
 
             <!-- Type Distribution -->
-            <div class="mt-8 bg-white rounded-lg shadow-md p-6">
+            <div class="mx-auto max-w-full md:max-w-3xl sm:max-w-3xl lg:max-w-4xl xl:max-w-5xl mt-2 bg-white rounded-lg shadow-md p-6">
                 <h3 class="text-xl font-bold text-gray-900 mb-4">Distribución de Tipos</h3>
                 <div class="flex flex-wrap gap-3">
                     <div v-for="(count, type) in typeDistribution" :key="type"
@@ -135,11 +135,11 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
-import { useTeamStore } from '../stores/teamStore'
-import PokemonTeamCard from '../components/pokemon/PokemonTeamCard.vue'
-import PokemonTypes from '../components/pokemon/PokemonTypes.vue'
-import BaseButton from '../components/ui/BaseButton.vue'
-import BaseModal from '../components/ui/BaseModal.vue'
+import { useTeamStore } from '@/stores/teamStore'
+import PokemonTeamCard from '@/components/pokemon/PokemonTeamCard.vue'
+import PokemonTypes from '@/components/pokemon/PokemonTypes.vue'
+import BaseButton from '@/components/ui/BaseButton.vue'
+import BaseModal from '@/components/ui/BaseModal.vue'
 
 const router = useRouter()
 const teamStore = useTeamStore()

@@ -31,7 +31,7 @@
 </template>
 
 <script setup lang="ts">
-import type { EvolutionPokemon } from '../../types/Pokemon'
+import type { EvolutionPokemon } from '@/types/Pokemon'
 
 interface Props {
     evolutions: EvolutionPokemon[]

@@ -1,37 +1,20 @@
 <template>
-    <div class="bg-white rounded-lg p-6 shadow-md">
-        <h3 class="text-lg font-bold text-gray-900 mb-4">Sonido del Pokémon</h3>
-
-        <div v-if="cry" class="flex items-center justify-center gap-4">
-            <button @click="togglePlay" :disabled="loading"
-                class="bg-blue-600 hover:bg-blue-700 text-white rounded-full p-4 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl">
-                <svg v-if="!isPlaying" class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M8 5v14l11-7z" />
-                </svg>
-                <svg v-else class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z" />
-                </svg>
-            </button>
-
-            <div class="flex-1 max-w-xs">
-                <div class="bg-gray-200 rounded-full h-2 overflow-hidden">
-                    <div class="bg-blue-600 h-full transition-all duration-100" :style="{ width: `${progress}%` }">
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <p v-else class="text-center text-gray-500">
-            No hay sonido disponible para este Pokémon
-        </p>
-
-        <audio ref="audioRef" :src="cry" @ended="handleEnded" @timeupdate="handleTimeUpdate" @loadstart="loading = true"
+    <BaseButton @click="togglePlay" :disabled="loading" size="sm" variant="success"
+            class="flex items-center gap-2 cursor-pointer text-sm text-blue-600 hover:text-gray-800 font-medium transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19.114 5.636a9 9 0 0 1 0 12.728M16.463 8.288a5.25 5.25 0 0 1 0 7.424M6.75 8.25l4.72-4.72a.75.75 0 0 1 1.28.53v15.88a.75.75 0 0 1-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.009 9.009 0 0 1 2.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75Z" />
+            </svg>
+            <span>{{ isPlaying ? 'Detener' : 'Escuchar' }}</span>
+        </BaseButton>
+        <audio ref="audioRef" :src="cry" @ended="handleEnded" @loadstart="loading = true"
             @canplay="loading = false"></audio>
-    </div>
+        
 </template>
 
 <script setup lang="ts">
-import { ref, onUnmounted } from 'vue'
+import { onUnmounted } from 'vue'
+import { useAudio } from '@/composables/useAudio';
+import BaseButton from '@/components/ui/BaseButton.vue';
 
 interface Props {
     cry?: string
@@ -39,38 +22,7 @@ interface Props {
 
 const props = defineProps<Props>()
 
-const audioRef = ref<HTMLAudioElement | null>(null)
-const isPlaying = ref(false)
-const progress = ref(0)
-const loading = ref(false)
-
-function togglePlay() {
-    if (!audioRef.value) return
-
-    if (isPlaying.value) {
-        audioRef.value.pause()
-        isPlaying.value = false
-    } else {
-        audioRef.value.play()
-        isPlaying.value = true
-    }
-}
-
-function handleEnded() {
-    isPlaying.value = false
-    progress.value = 0
-}
-
-function handleTimeUpdate() {
-    if (!audioRef.value) return
-
-    const current = audioRef.value.currentTime
-    const duration = audioRef.value.duration
-
-    if (duration > 0) {
-        progress.value = (current / duration) * 100
-    }
-}
+const { isPlaying, loading, togglePlay, audioRef, handleEnded } = useAudio()
 
 onUnmounted(() => {
     if (audioRef.value) {

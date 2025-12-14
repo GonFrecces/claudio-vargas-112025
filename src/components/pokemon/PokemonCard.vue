@@ -28,22 +28,6 @@
                 {{ pokemon.name }}
             </h3>
 
-            <!-- Estadísticas mini -->
-            <!-- <div class="grid grid-cols-3 gap-2 text-xs">
-                <div class="text-center bg-red-50 rounded p-2">
-                    <p class="text-gray-500 font-medium">HP</p>
-                    <p class="font-bold text-red-600">{{ pokemon.stats.hp }}</p>
-                </div>
-                <div class="text-center bg-orange-50 rounded p-2">
-                    <p class="text-gray-500 font-medium">ATK</p>
-                    <p class="font-bold text-orange-600">{{ pokemon.stats.attack }}</p>
-                </div>
-                <div class="text-center bg-blue-50 rounded p-2">
-                    <p class="text-gray-500 font-medium">DEF</p>
-                    <p class="font-bold text-blue-600">{{ pokemon.stats.defense }}</p>
-                </div>
-            </div> -->
-
             <!-- Checkbox de selección -->
             <BaseCheckbox :model-value="isSelected" :disabled="disabled" @update:model-value="handleSelect"
                 class="mt-3">
@@ -56,10 +40,10 @@
 </template>
 
 <script setup lang="ts">
-import type { SimplifiedPokemon } from '../../types/Pokemon'
-import BaseCard from '../ui/BaseCard.vue'
-import BaseCheckbox from '../ui/BaseCheckbox.vue'
-import PokemonTypes from '../pokemon/PokemonTypes.vue'
+import type { SimplifiedPokemon } from '@/types/Pokemon'
+import BaseCard from '@/components/ui/BaseCard.vue'
+import BaseCheckbox from '@/components/ui/BaseCheckbox.vue'
+import PokemonTypes from '@/components/pokemon/PokemonTypes.vue'
 
 interface Props {
     pokemon: SimplifiedPokemon
