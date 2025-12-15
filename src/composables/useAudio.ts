@@ -5,7 +5,7 @@ export const useAudio = () => {
     const isPlaying = ref(false)
     const loading = ref(false)
 
-    function togglePlay() {
+    const togglePlay = () => {
         if (!audioRef.value) return
 
         if (isPlaying.value) {
@@ -17,7 +17,7 @@ export const useAudio = () => {
         }
     }
 
-    function handleEnded() {
+    const handleEnded = () => {
         isPlaying.value = false
     }
 

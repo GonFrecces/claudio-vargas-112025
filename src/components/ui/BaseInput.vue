@@ -45,7 +45,7 @@ const stateClasses = computed(() => {
     return 'border-gray-300 focus:border-blue-500 focus:ring-blue-500'
 })
 
-function handleInput(event: Event) {
+const handleInput = (event: Event) => {
     const target = event.target as HTMLInputElement
     emit('update:modelValue', target.value)
 }

@@ -51,7 +51,7 @@ const labelSizeClasses = computed(() => {
     return sizes[props.size]
 })
 
-function handleChange(event: Event) {
+const handleChange = (event: Event) => {
     const target = event.target as HTMLInputElement
     emit('update:modelValue', target.checked)
 }

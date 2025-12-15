@@ -62,7 +62,7 @@ const emit = defineEmits<{
     'toggle-select': [pokemon: SimplifiedPokemon]
 }>()
 
-function handleSelect() {
+const handleSelect = () => {
     if (!props.disabled) {
         emit('toggle-select', props.pokemon)
     }

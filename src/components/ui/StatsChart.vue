@@ -55,7 +55,7 @@ const totalStats = computed(() => {
     return Object.values(props.stats).reduce((sum, value) => sum + value, 0)
 })
 
-function getStatColor(value: number): string {
+const getStatColor = (value: number): string => {
     if (value >= 150) return 'bg-green-500'
     if (value >= 100) return 'bg-blue-500'
     if (value >= 50) return 'bg-yellow-500'

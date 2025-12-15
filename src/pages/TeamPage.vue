@@ -184,19 +184,19 @@ const typeDistribution = computed(() => {
     return distribution
 })
 
-function handleRemove(id: number) {
+const handleRemove = (id: number) => {
     teamStore.removeFromTeam(id)
 }
 
-function handleViewDetail(id: number) {
+const handleViewDetail = (id: number) => {
     router.push(`/team/${id}`)
 }
 
-function handleClearTeam() {
+const handleClearTeam = () => {
     showConfirmModal.value = true
 }
 
-function confirmClearTeam() {
+const confirmClearTeam = () => {
     teamStore.clearTeam()
     showConfirmModal.value = false
 }

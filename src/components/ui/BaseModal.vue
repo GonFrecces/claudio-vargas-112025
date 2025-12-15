@@ -81,11 +81,11 @@ const sizeClasses = computed(() => {
     return sizes[props.size]
 })
 
-function close() {
+const close = () => {
     emit('update:modelValue', false)
 }
 
-function handleBackdropClick() {
+const handleBackdropClick = () => {
     if (props.closeOnBackdrop) {
         close()
     }
