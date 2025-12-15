@@ -18,3 +18,8 @@ export const elements = [
         { alt: 'Water', type: 'water', src: '/src/assets/icons/water.png', width: 25, height: 'auto' },
         { alt: 'Normal', type: 'normal', src: '/src/assets/icons/normal.png', width: 25, height: 'auto' },
     ]
+
+export const extractId = (url: string): number => {
+    const matches = url.match(/\/(\d+)\/$/)
+    return matches ? parseInt(matches[1] as string) : 0
+}

@@ -9,6 +9,7 @@ import type {
     EvolutionPokemon,
     ChainLink
 } from '@/types/Pokemon'
+import { extractId } from '@/utils/helpers'
 
 
 export const pokemonApi = {
@@ -85,11 +86,6 @@ export const pokemonApi = {
     // Procesar cadena evolutiva recursivamente
     async processEvolutionChain(chain: ChainLink): Promise<EvolutionPokemon[]> {
         const evolutions: EvolutionPokemon[] = []
-
-        const extractId = (url: string): number => {
-            const matches = url.match(/\/(\d+)\/$/)
-            return matches ? parseInt(matches[1] as string) : 0
-        }
 
         const processChain = async (link: any) => {
             const id = extractId(link.species.url)

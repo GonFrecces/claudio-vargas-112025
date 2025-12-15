@@ -7,7 +7,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { elements } from '@/utils/elements'
+import { elements } from '@/utils/helpers'
 
 interface Props {
     types: string[]

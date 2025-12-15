@@ -26,8 +26,6 @@ export const usePokemonDetail = () => {
         }
     };
 
-    
-
     return {
         pokemonDetail,
         isLoading,

@@ -36,11 +36,6 @@ const initChart = () => {
 
     chartInstance.value = echarts.init(chartDom);
 
-    // Hacer el gráfico responsivo
-    window.addEventListener('resize', () => {
-        chartInstance.value?.resize();
-    });
-
     const option: echarts.EChartsOption = {
         radar: {
             indicator: [
@@ -106,6 +101,10 @@ const initChart = () => {
 
 onMounted(() => {
     initChart();
+    // Hacer el gráfico responsivo
+    window.addEventListener('resize', () => {
+        chartInstance.value?.resize();
+    });
 });
 
 </script>
